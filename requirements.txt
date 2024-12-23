@@ -1,7 +1,8 @@
-streamlit
+moviepy==2.1.1
+dill
 pandas
-sqlite3
-pickle-mixin
-moviepy
-numpy
-Pillow
+ffmpeg
+imageio
+Pillow==10.4.0
+streamlit
+scikit-learn

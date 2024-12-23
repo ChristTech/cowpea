@@ -2,5 +2,7 @@ streamlit
 pandas
 pickle-mixin
 moviepy==2.1.1
+ffmpeg
+imageio
 numpy==2.2.1
 Pillow==10.4.0

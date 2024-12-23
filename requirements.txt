@@ -1,4 +1,4 @@
-opencv-python
+opencv-python-headless
 moviepy==2.1.1
 joblib==1.4.2
 pandas

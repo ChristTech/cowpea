@@ -1,6 +1,6 @@
 opencv-python
 moviepy==2.1.1
-dill
+joblib==1.4.2
 pandas
 ffmpeg
 imageio

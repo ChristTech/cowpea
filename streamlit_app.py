@@ -3,7 +3,7 @@ import sqlite3
 import dill
 from datetime import datetime
 import base64
-#from moviepy.editor import VideoFileClip
+import cv2
 import numpy as np
 from PIL import Image
 import io
@@ -77,6 +77,19 @@ def get_growth_stage(days_remaining):
         return "Podding"
     else:
         return "Maturity"
+
+# Function to extract a frame from a video using OpenCV
+def get_frame_from_video(video_path, frame_time):
+    cap = cv2.VideoCapture(video_path)
+    fps = cap.get(cv2.CAP_PROP_FPS)  # Get frames per second
+    frame_number = int(frame_time * fps)  # Calculate the frame number
+    cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)  # Set the video position
+    ret, frame = cap.read()
+    cap.release()
+    if not ret:
+        raise ValueError("Could not extract frame. Check the video path and time.")
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+    return Image.fromarray(frame)
 
 # Streamlit UI with tabs
 st.title("Cowpea Crop Monitoring & Growth Tracker")
@@ -192,7 +205,6 @@ with tabs[1]:
         st.write(f"- **Predicted MATURE (95% Maturity):** {plant_details['MATURE']}")
         st.write(f"- **Notes:** {plant_details['notes']}")
 
-
         # Calculate the time in seconds to extract the frame
         video_duration = 148  # Total video length in seconds (2 minutes 28 seconds)
         video_start_time = 148 - (int((plant_details['days_to_maturity'] / plant_details['MATURE']) * video_duration))
@@ -200,22 +212,12 @@ with tabs[1]:
         # Ensure the video start time is within bounds
         video_start_time = max(0, video_start_time)
 
-        # Extract a frame from the video at the calculated time
+        # Extract a frame from the video
         video_path = "assets/timelapse_beans.mp4"  # Replace with the correct path
-
-        clip = VideoFileClip(video_path)
-        frame_time = video_start_time  # in seconds
-        
-        # Extract the frame as an image
-        frame = clip.get_frame(frame_time)
-        
-        # Convert the frame (numpy array) to an image
-        frame_image = Image.fromarray(np.uint8(frame))
-        
-        # Display the image in Streamlit
-        st.image(frame_image, caption="Predicted Growth Stage", use_column_width=True)
-        
+        try:
+            frame_image = get_frame_from_video(video_path, video_start_time)
+            st.image(frame_image, caption="Predicted Growth Stage", use_column_width=True)
+        except Exception as e:
+            st.error(f"Error extracting frame: {str(e)}")
     else:
-        st.info("No plants are currently being tracked. Add one using the prediction tool above.")
-# Close database connection
-conn.close()
+        st.warning("No plants have been added to the tracker yet.")

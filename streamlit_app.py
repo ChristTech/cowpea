@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image
 import io
 import streamlit as st
+import joblib
 
 # Function to load the image and encode it in Base64
 def get_base64_image(file_path):
@@ -39,13 +40,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Load the trained model
-with open('model/gradient_boosting_model.pkl', 'rb') as f:
-    model = dill.load(f)
+# # Load the trained model
+# with open('model/gradient_boosting_model.pkl', 'rb') as f:
+#     model = dill.load(f)
 
-# Load the saved encoders
-with open('model/label_encoders.pkl', 'rb') as f:
-    label_encoders_features = dill.load(f)
+# # Load the saved encoders
+# with open('model/label_encoders.pkl', 'rb') as f:
+#     label_encoders_features = dill.load(f)
+
+model = joblib.load('model/gradient_boosting_model.pkl')
+
+label_encoders_features = joblib.load('model/label_encoders.pkl')
 
 # Database setup for plant tracking
 conn = sqlite3.connect('plant_tracking.db')

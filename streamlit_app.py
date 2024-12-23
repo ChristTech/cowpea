@@ -221,7 +221,7 @@ with tabs[1]:
         video_path = "assets/timelapse_beans.mp4"  # Replace with the correct path
         try:
             frame_image = get_frame_from_video(video_path, video_start_time)
-            st.image(frame_image, caption="Predicted Growth Stage", use_column_width=True)
+            st.image(frame_image, caption="Predicted Growth Stage", use_container_width=True)
         except Exception as e:
             st.error(f"Error extracting frame: {str(e)}")
     else:

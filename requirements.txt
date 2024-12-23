@@ -4,3 +4,4 @@ ffmpeg
 imageio
 Pillow==10.4.0
 streamlit
+scikit-learn

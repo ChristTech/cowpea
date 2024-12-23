@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
-import pickle
+import dill
 from datetime import datetime
 import base64
 from moviepy.editor import VideoFileClip
@@ -41,11 +41,11 @@ st.markdown(
 
 # Load the trained model
 with open('model/gradient_boosting_model.pkl', 'rb') as f:
-    model = pickle.load(f)
+    model = dill.load(f)
 
 # Load the saved encoders
 with open('model/label_encoders.pkl', 'rb') as f:
-    label_encoders_features = pickle.load(f)
+    label_encoders_features = dill.load(f)
 
 # Database setup for plant tracking
 conn = sqlite3.connect('plant_tracking.db')

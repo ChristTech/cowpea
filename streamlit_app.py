@@ -76,9 +76,9 @@ def get_growth_stage(days_remaining):
         return "Germination"
     elif 21 < days_remaining <= 35:
         return "Vegetative"
-    elif 7 < days_remaining <= 21:
+    elif 10 < days_remaining <= 21:
         return "Flowering"
-    elif 0 < days_remaining <= 7:
+    elif 0 < days_remaining <= 10:
         return "Podding"
     else:
         return "Maturity"
@@ -142,7 +142,7 @@ with tabs[0]:
         prediction = model.predict(input_data)
         st.subheader("Predicted Parameters:")
         target_columns = [
-            "Number of expected seeds in POD", "SEEDKGHA",
+            "SEEDKGHA", "Number of expected seeds in POD",
             "Days to 50% maturity (DFF)", "Days to 95% maturity (MATURE)"
         ]
         

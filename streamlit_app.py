@@ -1,4 +1,3 @@
-import streamlit as st
 import pandas as pd
 import sqlite3
 import pickle
@@ -8,6 +7,7 @@ from moviepy.editor import VideoFileClip
 import numpy as np
 from PIL import Image
 import io
+import streamlit as st
 
 # Function to load the image and encode it in Base64
 def get_base64_image(file_path):

@@ -140,7 +140,7 @@ with tabs[0]:
         prediction = model.predict(input_data)
         st.subheader("Predicted Parameters:")
         target_columns = [
-            "SEEDKGHA", "Number of expected seeds in POD",
+            "Number of expected seeds in POD", "SEEDKGHA",
             "Days to 50% maturity (DFF)", "Days to 95% maturity (MATURE)"
         ]
         
